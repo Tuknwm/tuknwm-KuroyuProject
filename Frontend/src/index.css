@@ -1,0 +1,189 @@
+﻿@import "tailwindcss";
+
+:root {
+  --color-primary: #9694fc;
+  --color-primary-dark: #7e7cf8;
+  --color-primary-light: #1e1c3a;
+  --color-surface: #2E2E2E;
+  --color-surface-container: #1E1E1E;
+  --color-border: rgba(252,255,252,0.07);
+  --color-text-main: #FCFFFC;
+  --color-text-muted: rgba(252,255,252,0.45);
+  --color-success: #10b981;
+  --color-warning: #C8A96E;
+  --color-danger: #D94840;
+  --color-vermillion: #D94840;
+  --color-wa-gold: #C8A96E;
+
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Hide browser native scrollbar — Lenis handles scroll virtually */
+html, body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom scrollbar only for inner overflow elements (dropdowns, modals, lists) */
+.overflow-y-auto::-webkit-scrollbar,
+.overflow-y-scroll::-webkit-scrollbar,
+[data-scrollbar]::-webkit-scrollbar {
+  width: 4px;
+}
+.overflow-y-auto::-webkit-scrollbar-track,
+.overflow-y-scroll::-webkit-scrollbar-track,
+[data-scrollbar]::-webkit-scrollbar-track {
+  background: transparent;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb,
+.overflow-y-scroll::-webkit-scrollbar-thumb,
+[data-scrollbar]::-webkit-scrollbar-thumb {
+  background: rgba(252,255,252,0.15);
+  border-radius: 999px;
+}
+.overflow-y-auto::-webkit-scrollbar-thumb:hover,
+.overflow-y-scroll::-webkit-scrollbar-thumb:hover,
+[data-scrollbar]::-webkit-scrollbar-thumb:hover {
+  background: rgba(252,255,252,0.28);
+}
+.overflow-y-auto, .overflow-y-scroll, [data-scrollbar] {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(252,255,252,0.15) transparent;
+}
+
+button, a, [role="button"], label[for], select {
+  cursor: pointer;
+}
+
+/* Navbar hidden before GSAP entrance */
+.gsap-nav-init {
+  opacity: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  color: #FCFFFC;
+  background-color: #262626;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.font-heading {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Dark Japanese gradients */
+.bg-gradient-hero {
+  background: linear-gradient(135deg, #040F0F 0%, #0C1C1C 50%, rgba(150,148,252,0.12) 100%);
+}
+
+.bg-gradient-soft {
+  background: linear-gradient(180deg, #040F0F 0%, #0A1515 100%);
+}
+
+.bg-gradient-purple-banner {
+  background: linear-gradient(90deg, #040F0F 0%, #0C1C1C 60%, rgba(150,148,252,0.15) 100%);
+}
+
+.bg-gradient-accent {
+  background: linear-gradient(135deg, #9694fc 0%, #7e7cf8 100%);
+}
+
+/* Japanese subtle decorative line */
+.wa-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(217,72,64,0.4), rgba(200,169,110,0.4), transparent);
+}
+
+/* Auth modal pop animation */
+@keyframes modal-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes overlay-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.auth-modal-overlay {
+  animation: overlay-fade 0.2s ease-out;
+}
+
+.auth-modal-box {
+  animation: modal-pop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Override browser autofill background (Chrome/Edge inject white/yellow) */
+.auth-modal-box input:-webkit-autofill,
+.auth-modal-box input:-webkit-autofill:hover,
+.auth-modal-box input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #1E1E1E inset !important;
+  -webkit-text-fill-color: #FCFFFC !important;
+  caret-color: #FCFFFC;
+}
+
+/* Skeleton shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-box {
+  background: linear-gradient(
+    90deg,
+    #2E2E2E 25%,
+    #383838 50%,
+    #2E2E2E 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite ease-in-out;
+  border-radius: 6px;
+}
+
+.skeleton-box-light {
+  background: linear-gradient(
+    90deg,
+    #303030 25%,
+    #3a3a3a 50%,
+    #303030 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s infinite ease-in-out;
+  border-radius: 6px;
+}
