@@ -122,6 +122,12 @@ export default function Header() {
     return () => es.close();
   }, [user]);
 
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
+  const [logoutClosing, setLogoutClosing] = useState(false);
+  function closeLogout() {
+    setLogoutClosing(true);
+    setTimeout(() => { setLogoutConfirm(false); setLogoutClosing(false); }, 200);
+  }
   function logout() {
     localStorage.removeItem('kuroyu_token'); localStorage.removeItem('kuroyu_user');
     localStorage.removeItem('kuroyu_cart');
@@ -335,7 +341,7 @@ export default function Header() {
 
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-52 rounded-[10px] overflow-hidden py-1"
-                  style={{ background: '#2E2E2E', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 16px 40px rgba(0,0,0,0.45)', zIndex: 100 }}>
+                  style={{ background: 'rgba(38,38,38,0.6)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 100 }}>
                   <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(252,255,252,0.06)' }}>
                     <div className="text-xs font-semibold" style={{ color: '#FCFFFC' }}>{user.name}</div>
                     <div className="text-[11px] mt-0.5 truncate" style={{ color: 'rgba(252,255,252,0.4)' }}>{user.email}</div>
@@ -347,7 +353,7 @@ export default function Header() {
                     Settings
                   </button>
                   <div className="my-1" style={{ borderTop: '1px solid rgba(252,255,252,0.06)' }} />
-                  <button onClick={logout}
+                  <button onClick={() => { setDropdownOpen(false); setLogoutConfirm(true); }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 text-xs transition-colors hover:bg-[rgba(217,72,64,0.08)]"
                     style={{ color: '#D94840' }}>
                     <LogOut className="w-4 h-4 shrink-0" />
@@ -375,8 +381,40 @@ export default function Header() {
 
       {authMode && <AuthModal mode={authMode} onClose={() => setAuthMode(null)} onAuthenticated={setUser} />}
     </header>
-    
+
     {!isHome && <div style={{ height: 64 }} aria-hidden="true" />}
+
+    {logoutConfirm && (
+      <div className="fixed inset-0 flex items-center justify-center"
+        style={{ zIndex: 9999, background: logoutClosing ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.6)', transition: 'background 0.2s ease' }}
+        onClick={closeLogout}>
+        <style>{`
+          @keyframes hdr-logout-in  { from { opacity:0; transform:scale(0.92) translateY(10px) } to { opacity:1; transform:scale(1) translateY(0) } }
+          @keyframes hdr-logout-out { from { opacity:1; transform:scale(1) translateY(0) } to { opacity:0; transform:scale(0.92) translateY(10px) } }
+        `}</style>
+        <div className="rounded-[8px] p-6 w-72"
+          style={{ background: '#1E1E1E', animation: `${logoutClosing ? 'hdr-logout-out' : 'hdr-logout-in'} 0.2s ease forwards` }}
+          onClick={e => e.stopPropagation()}>
+          <div className="flex items-center justify-center mb-4">
+            <LogOut className="w-5 h-5" style={{ color: '#D94840' }} />
+          </div>
+          <p className="text-sm font-bold text-center mb-1" style={{ color: '#FCFFFC' }}>Sign out?</p>
+          <p className="text-xs text-center mb-5" style={{ color: 'rgba(252,255,252,0.4)' }}>You will be returned to the homepage.</p>
+          <div className="flex gap-2">
+            <button onClick={closeLogout}
+              className="flex-1 py-2.5 rounded-[8px] text-xs font-semibold transition-all hover:opacity-70"
+              style={{ background: 'rgba(252,255,252,0.07)', color: 'rgba(252,255,252,0.6)' }}>
+              Cancel
+            </button>
+            <button onClick={logout}
+              className="flex-1 py-2.5 rounded-[8px] text-xs font-bold transition-all hover:opacity-85"
+              style={{ background: '#D94840', color: '#FCFFFC' }}>
+              Sign Out
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
   </>
   );
 }

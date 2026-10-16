@@ -1,5 +1,10 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const Order = require('../models/Order');
+const Cart = require('../models/Cart');
+const Chat = require('../models/Chat');
+const Notification = require('../models/Notification');
+const { sendDeleteAccount } = require('../utils/mailer');
 
 const getAddresses = async (req, res) => {
   try {
@@ -89,4 +94,36 @@ const updateWallets = async (req, res) => {
   }
 };
 
-module.exports = { getAddresses, addAddress, deleteAddress, updateProfile, updatePassword, getWallets, updateWallets };
+const deleteAccount = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ success: false, message: 'User not found.' });
+    const scheduledDeleteAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    user.scheduledDeleteAt = scheduledDeleteAt;
+    await user.save();
+    const cancelUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    sendDeleteAccount({ name: user.name, email: user.email, cancelUrl });
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+async function purgeScheduledDeletes() {
+  try {
+    const due = await User.find({ scheduledDeleteAt: { $lte: new Date() } }).select('_id');
+    for (const u of due) {
+      await Promise.all([
+        User.findByIdAndDelete(u._id),
+        Order.deleteMany({ user: u._id }),
+        Cart.deleteOne({ user: u._id }),
+        Chat.deleteOne({ user: u._id }),
+        Notification.deleteMany({ user: u._id }),
+      ]);
+    }
+  } catch (err) {
+    console.error('[purge] scheduled delete failed:', err.message);
+  }
+}
+
+module.exports = { getAddresses, addAddress, deleteAddress, updateProfile, updatePassword, getWallets, updateWallets, deleteAccount, purgeScheduledDeletes };

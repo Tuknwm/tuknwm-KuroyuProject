@@ -224,7 +224,7 @@ function AuthModalInner({ mode, onClose, onAuthenticated }) {
 
   const overlayStyle = { background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)' };
   const boxStyle = {
-    background: '#2E2E2E', border: '1px solid rgba(252,255,252,0.08)',
+    background: '#2E2E2E',
     boxShadow: '0 24px 60px rgba(0,0,0,0.5)',
   };
 
@@ -232,7 +232,7 @@ function AuthModalInner({ mode, onClose, onAuthenticated }) {
     if (forgotMode) {
       return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 auth-modal-overlay" style={overlayStyle}>
-          <div className="w-full max-w-md rounded-[12px] overflow-hidden auth-modal-box" style={boxStyle}>
+          <div className="w-full max-w-md rounded-[8px] overflow-hidden auth-modal-box" style={boxStyle}>
             {modalHeader}
             <div className="p-6">
               {forgotSent ? (
@@ -263,7 +263,7 @@ function AuthModalInner({ mode, onClose, onAuthenticated }) {
 
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 auth-modal-overlay" style={overlayStyle}>
-        <form onSubmit={submit} className="w-full max-w-md rounded-[12px] overflow-hidden auth-modal-box" style={boxStyle}>
+        <form onSubmit={submit} className="w-full max-w-md rounded-[8px] overflow-hidden auth-modal-box" style={boxStyle}>
           {modalHeader}
           <div className="p-6">
             <h2 className="text-base font-bold" style={{ color: '#FCFFFC' }}>Welcome back</h2>
@@ -303,7 +303,7 @@ function AuthModalInner({ mode, onClose, onAuthenticated }) {
   if (step === 0) {
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 auth-modal-overlay" style={overlayStyle}>
-        <form onSubmit={existingAccount ? submit : handleStep0} className="w-full max-w-md rounded-[12px] overflow-hidden auth-modal-box" style={boxStyle}>
+        <form onSubmit={existingAccount ? submit : handleStep0} className="w-full max-w-md rounded-[8px] overflow-hidden auth-modal-box" style={boxStyle}>
           {modalHeader}
           <div className="p-6">
             {existingAccount ? (
@@ -355,7 +355,7 @@ function AuthModalInner({ mode, onClose, onAuthenticated }) {
   if (step === 1) {
     return (
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 auth-modal-overlay" style={overlayStyle}>
-        <form onSubmit={handleStep1} className="w-full max-w-md rounded-[12px] overflow-hidden auth-modal-box" style={boxStyle}>
+        <form onSubmit={handleStep1} className="w-full max-w-md rounded-[8px] overflow-hidden auth-modal-box" style={boxStyle}>
           {modalHeader}
           <div className="p-6">
             {backBtn(goBack)}
@@ -387,7 +387,7 @@ function AuthModalInner({ mode, onClose, onAuthenticated }) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 auth-modal-overlay" style={overlayStyle}>
-      <form onSubmit={submit} className="w-full max-w-md rounded-[12px] overflow-hidden auth-modal-box" style={boxStyle}>
+      <form onSubmit={submit} className="w-full max-w-md rounded-[8px] overflow-hidden auth-modal-box" style={boxStyle}>
         {modalHeader}
         <div className="p-6">
           {backBtn(goBack)}

@@ -104,9 +104,9 @@ function ReviewModal({ order, onClose, onSuccess }) {
           animation: `${closing ? 'review-bd-out' : 'review-bd-in'} 0.2s ease forwards`,
         }}
         onClick={e => { if (e.target === e.currentTarget) close(); }}>
-        <div className="w-full max-w-md mx-4 rounded-[16px] overflow-hidden"
+        <div className="w-full max-w-md mx-4 rounded-[8px] overflow-hidden"
           style={{
-            background: '#1E1E1E', border: '1px solid rgba(252,255,252,0.09)',
+            background: '#1E1E1E',
             boxShadow: '0 32px 80px rgba(0,0,0,0.7)',
             animation: `${closing ? 'review-out' : 'review-in'} 0.22s cubic-bezier(0.34,1.56,0.64,1) forwards`,
           }}>
@@ -676,9 +676,9 @@ export default function OrdersPage() {
               animation: `${modalClosing ? 'backdrop-out' : 'backdrop-in'} 0.2s ease forwards`,
             }}
             onClick={e => { if (e.target === e.currentTarget) closeModal(); }}>
-            <div className="w-full max-w-sm mx-4 rounded-[14px] p-6"
+            <div className="w-full max-w-sm mx-4 rounded-[8px] p-6"
               style={{
-                background: '#1E1E1E', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 24px 60px rgba(0,0,0,0.6)',
+                background: '#1E1E1E', boxShadow: '0 24px 60px rgba(0,0,0,0.6)',
                 animation: `${modalClosing ? 'modal-out' : 'modal-in'} 0.2s cubic-bezier(0.34,1.56,0.64,1) forwards`,
               }}>
               <h3 className="text-sm font-bold mb-1" style={{ color: '#FCFFFC' }}>Cancel Order</h3>

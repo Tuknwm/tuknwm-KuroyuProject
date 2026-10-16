@@ -35,6 +35,7 @@ const login = async (req, res) => {
     const user = await User.findOne({ email: email?.toLowerCase() }).select('+password');
     if (!user || !password || !(await bcrypt.compare(password, user.password))) return res.status(401).json({ success: false, message: 'Email or password is incorrect.' });
     if (user.disabled) return res.status(403).json({ success: false, message: `Your account has been disabled. Reason: ${user.disabledReason || 'No reason provided.'}` });
+    if (user.scheduledDeleteAt) { user.scheduledDeleteAt = null; await user.save(); }
     res.json({ success: true, token: createToken(user), user: publicUser(user) });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
@@ -69,6 +70,7 @@ const googleLogin = async (req, res) => {
       }).catch(() => {});
     }
     if (user.disabled) return res.status(403).json({ success: false, message: `Your account has been disabled. Reason: ${user.disabledReason || 'No reason provided.'}` });
+    if (user.scheduledDeleteAt) { user.scheduledDeleteAt = null; await user.save(); }
     res.json({ success: true, token: createToken(user), user: publicUser(user) });
   } catch (e) {
     res.status(401).json({ success: false, message: 'Google authentication failed.' });

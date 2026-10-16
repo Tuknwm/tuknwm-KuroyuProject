@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const { welcomeEmail } = require('../emails/welcome');
+const { deleteAccountEmail } = require('../emails/deleteAccount');
 
 function getTransport() {
   const { GMAIL_USER, GMAIL_PASS } = process.env;
@@ -84,4 +85,19 @@ async function sendResetPassword({ name, email, resetUrl }) {
   }
 }
 
-module.exports = { sendWelcome, sendResetPassword };
+async function sendDeleteAccount({ name, email, cancelUrl }) {
+  const transport = getTransport();
+  if (!transport) return;
+  try {
+    await transport.sendMail({
+      from: `Kuroyu <${process.env.GMAIL_USER}>`,
+      to: email,
+      subject: 'Your Kuroyu account is scheduled for deletion',
+      html: deleteAccountEmail({ name, cancelUrl }),
+    });
+  } catch (err) {
+    console.error('[mailer] sendDeleteAccount failed:', err.message);
+  }
+}
+
+module.exports = { sendWelcome, sendResetPassword, sendDeleteAccount };

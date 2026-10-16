@@ -19,8 +19,9 @@ const userSchema = new mongoose.Schema({
   disabledReason: { type: String, default: null },
   addresses:      { type: [addressSchema], default: [] },
   wallets:        { type: Map, of: String, default: {} },
-  resetToken:       { type: String, select: false },
-  resetTokenExpiry: { type: Date,   select: false },
+  resetToken:        { type: String, select: false },
+  resetTokenExpiry:  { type: Date,   select: false },
+  scheduledDeleteAt: { type: Date,   default: null },
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

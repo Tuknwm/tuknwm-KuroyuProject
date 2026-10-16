@@ -50,6 +50,11 @@ export default function CheckoutPage() {
   const [insurance, setInsurance] = useState(false);
   const [note, setNote] = useState('');
   const [voucherOpen, setVoucherOpen] = useState(false);
+  const [voucherClosing, setVoucherClosing] = useState(false);
+  function closeVoucher() {
+    setVoucherClosing(true);
+    setTimeout(() => { setVoucherOpen(false); setVoucherClosing(false); }, 200);
+  }
   const dropdownRef = useRef(null);
 
   
@@ -433,14 +438,18 @@ export default function CheckoutPage() {
       
       {voucherOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4"
-          style={{ background: 'rgba(0,0,0,0.7)' }}
-          onClick={() => setVoucherOpen(false)}>
-          <div className="w-full max-w-sm rounded-[14px] p-5"
-            style={{ background: '#1E1E1E', border: '1px solid rgba(252,255,252,0.08)' }}
+          style={{ background: voucherClosing ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.7)', transition: 'background 0.2s ease' }}
+          onClick={closeVoucher}>
+          <style>{`
+            @keyframes voucher-in  { from { opacity:0; transform:scale(0.92) translateY(10px) } to { opacity:1; transform:scale(1) translateY(0) } }
+            @keyframes voucher-out { from { opacity:1; transform:scale(1) translateY(0) } to { opacity:0; transform:scale(0.92) translateY(10px) } }
+          `}</style>
+          <div className="w-full max-w-sm rounded-[8px] p-5"
+            style={{ background: '#1E1E1E', animation: `${voucherClosing ? 'voucher-out' : 'voucher-in'} 0.2s ease forwards` }}
             onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
               <p className="font-bold text-sm">My Vouchers</p>
-              <button onClick={() => setVoucherOpen(false)}
+              <button onClick={closeVoucher}
                 className="p-1 rounded-[6px] transition-colors hover:bg-white/5"
                 style={{ color: 'rgba(252,255,252,0.4)' }}>
                 <X className="w-4 h-4" />

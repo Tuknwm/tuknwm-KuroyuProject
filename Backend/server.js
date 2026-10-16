@@ -7,6 +7,10 @@ const app = express();
 
 connectDB();
 
+const { purgeScheduledDeletes } = require('./controllers/userController');
+purgeScheduledDeletes();
+setInterval(purgeScheduledDeletes, 60 * 60 * 1000);
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

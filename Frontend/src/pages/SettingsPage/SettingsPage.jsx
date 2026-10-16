@@ -337,6 +337,7 @@ function AccountPanel({ user }) {
   const [confirm, setConfirm] = useState('');
   const [show, setShow] = useState(false);
   const [pwdMsg, setPwdMsg] = useState('');
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const profileChanged = name !== (user?.name ?? '') || email !== (user?.email ?? '');
   const pwdFilled = current.length > 0 && next.length > 0 && confirm.length > 0;
@@ -373,6 +374,15 @@ function AccountPanel({ user }) {
     } catch {  }
     setPwdMsg('Password changed successfully!');
     setCurrent(''); setNext(''); setConfirm('');
+  }
+
+  async function deleteAccount() {
+    try {
+      await fetch(`${API_URL}/api/user/account`, { method: 'DELETE', headers: authHeader() });
+    } catch {  }
+    localStorage.removeItem('kuroyu_token'); localStorage.removeItem('kuroyu_user');
+    sessionStorage.removeItem('kuroyu_token'); sessionStorage.removeItem('kuroyu_user');
+    window.location.href = '/';
   }
 
   const pwdInput = (val, setter, placeholder) => (
@@ -456,6 +466,44 @@ function AccountPanel({ user }) {
           )}
         </div>
       </form>
+
+
+      <style>{`
+        .delete-underline { position: relative; }
+        .delete-underline::after { content: ''; position: absolute; left: 0; bottom: -1px; width: 0; height: 1px; background: #D94840; transition: width 0.3s ease; }
+        .delete-underline:hover::after { width: 100%; }
+      `}</style>
+      <div className="mt-10">
+        <div style={{ ...s.divider, borderColor: 'rgba(217,72,64,0.15)' }} />
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h3 className="text-sm font-bold mb-0.5" style={{ color: '#D94840' }}>Danger Zone</h3>
+            <p className="text-xs" style={{ color: 'rgba(252,255,252,0.4)' }}>Permanently delete your account and all your data.</p>
+          </div>
+          {deleteConfirm ? (
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="text-xs" style={{ color: 'rgba(252,255,252,0.5)' }}>You have 24 hours to cancel via email.</span>
+              <button type="button" onClick={deleteAccount}
+                className="px-4 py-2 rounded-[8px] text-xs font-bold transition-all hover:opacity-85"
+                style={{ background: '#D94840', color: '#FCFFFC' }}>
+                Yes, delete
+              </button>
+              <button type="button" onClick={() => setDeleteConfirm(false)}
+                className="text-xs font-semibold transition-all hover:opacity-70"
+                style={{ color: 'rgba(252,255,252,0.45)' }}>
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button type="button" onClick={() => setDeleteConfirm(true)}
+              className="delete-underline flex items-center gap-1.5 text-xs font-semibold shrink-0"
+              style={{ background: 'none', border: 'none', color: '#D94840', cursor: 'pointer', padding: '2px 0' }}>
+              <UserX className="w-3.5 h-3.5" />
+              Delete Account
+            </button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -1310,8 +1358,8 @@ function PaymentPanel() {
         <div className="fixed inset-0 z-50 flex items-center justify-center"
           style={{ background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)', animation: `${closing ? 'bd-out' : 'bd-in'} 0.2s ease forwards` }}
           onClick={e => { if (e.target === e.currentTarget) closeModal(); }}>
-          <div className="w-full max-w-sm mx-4 rounded-[14px] p-6"
-            style={{ background: '#1E1E1E', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 24px 60px rgba(0,0,0,0.6)', animation: `${closing ? 'pay-out' : 'pay-in'} 0.2s cubic-bezier(.34,1.56,.64,1) forwards` }}>
+          <div className="w-full max-w-sm mx-4 rounded-[8px] p-6"
+            style={{ background: '#1E1E1E', boxShadow: '0 24px 60px rgba(0,0,0,0.6)', animation: `${closing ? 'pay-out' : 'pay-in'} 0.2s cubic-bezier(.34,1.56,.64,1) forwards` }}>
 
             <h3 className="text-sm font-bold mb-1" style={{ color: '#FCFFFC' }}>Add Wallet</h3>
             <p className="text-xs mb-5" style={{ color: 'rgba(252,255,252,0.4)' }}>Select a wallet and enter your phone number.</p>
@@ -1467,9 +1515,14 @@ function HelpPanel() {
 function AdminPanel() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [banTarget, setBanTarget] = useState(null); 
+  const [banTarget, setBanTarget] = useState(null);
   const [banReason, setBanReason] = useState('');
+  const [banClosing, setBanClosing] = useState(false);
   const [busy, setBusy] = useState('');
+  function closeBan() {
+    setBanClosing(true);
+    setTimeout(() => { setBanTarget(null); setBanReason(''); setBanClosing(false); }, 200);
+  }
 
   useEffect(() => {
     fetch(`${API_URL}/api/admin/users`, { headers: authHeader() })
@@ -1596,10 +1649,14 @@ function AdminPanel() {
       
       {banTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center"
-          style={{ background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)' }}
-          onClick={e => { if (e.target === e.currentTarget) { setBanTarget(null); setBanReason(''); } }}>
-          <div className="w-full max-w-sm mx-4 rounded-[14px] p-6"
-            style={{ background: '#1E1E1E', border: '1px solid rgba(252,255,252,0.08)' }}>
+          style={{ background: banClosing ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)', transition: 'background 0.2s ease' }}
+          onClick={e => { if (e.target === e.currentTarget) closeBan(); }}>
+          <style>{`
+            @keyframes ban-in  { from { opacity:0; transform:scale(0.92) translateY(10px) } to { opacity:1; transform:scale(1) translateY(0) } }
+            @keyframes ban-out { from { opacity:1; transform:scale(1) translateY(0) } to { opacity:0; transform:scale(0.92) translateY(10px) } }
+          `}</style>
+          <div className="w-full max-w-sm mx-4 rounded-[8px] p-6"
+            style={{ background: '#1E1E1E', animation: `${banClosing ? 'ban-out' : 'ban-in'} 0.2s ease forwards` }}>
             <div className="flex items-center gap-2 mb-1">
               <h3 className="text-sm font-bold" style={{ color: '#FCFFFC' }}>Ban User</h3>
             </div>
@@ -1624,7 +1681,7 @@ function AdminPanel() {
                 <Ban className="w-3.5 h-3.5" />
                 Confirm Ban
               </button>
-              <button onClick={() => { setBanTarget(null); setBanReason(''); }}
+              <button onClick={closeBan}
                 className="px-4 py-2 rounded-[8px] text-xs font-semibold transition-all hover:opacity-70"
                 style={{ color: 'rgba(252,255,252,0.45)' }}>
                 Cancel
@@ -2934,6 +2991,12 @@ export default function SettingsPage() {
   const [user] = useState(() => {
     try { return JSON.parse(sessionStorage.getItem('kuroyu_user') || localStorage.getItem('kuroyu_user')); } catch { return null; }
   });
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
+  const [logoutClosing, setLogoutClosing] = useState(false);
+  function closeLogout() {
+    setLogoutClosing(true);
+    setTimeout(() => { setLogoutConfirm(false); setLogoutClosing(false); }, 200);
+  }
   function logout() {
     localStorage.removeItem('kuroyu_token');
     localStorage.removeItem('kuroyu_user');
@@ -3043,22 +3106,60 @@ export default function SettingsPage() {
 
             <div className="my-2" style={{ borderTop: '1px solid rgba(252,255,252,0.06)' }} />
 
-            <button onClick={logout}
+            <button onClick={() => setLogoutConfirm(true)}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-[7px] text-xs font-medium transition-all hover:bg-[rgba(217,72,64,0.07)]"
               style={{ color: '#D94840' }}>
               <LogOut className="w-4 h-4 shrink-0" />
               Sign Out
             </button>
 
+
           </nav>
         </aside>
 
-        
+
         <main className="flex-1 min-w-0 pt-2">
           <Panel user={user} />
         </main>
 
       </div>
+
+      {logoutConfirm && (
+        <div
+          className="fixed inset-0 flex items-center justify-center"
+          style={{ zIndex: 9999, background: logoutClosing ? 'rgba(0,0,0,0)' : 'rgba(0,0,0,0.6)', transition: 'background 0.2s ease' }}
+          onClick={closeLogout}>
+          <style>{`
+            @keyframes logout-in  { from { opacity:0; transform:scale(0.92) translateY(10px) } to { opacity:1; transform:scale(1) translateY(0) } }
+            @keyframes logout-out { from { opacity:1; transform:scale(1) translateY(0) } to { opacity:0; transform:scale(0.92) translateY(10px) } }
+          `}</style>
+          <div
+            className="rounded-[8px] p-6 w-72"
+            style={{
+              background: '#1E1E1E',
+              animation: `${logoutClosing ? 'logout-out' : 'logout-in'} 0.2s ease forwards`,
+            }}
+            onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-center mb-4 mx-auto">
+              <LogOut className="w-5 h-5" style={{ color: '#D94840' }} />
+            </div>
+            <p className="text-sm font-bold text-center mb-1" style={{ color: '#FCFFFC' }}>Sign out?</p>
+            <p className="text-xs text-center mb-5" style={{ color: 'rgba(252,255,252,0.4)' }}>You will be returned to the homepage.</p>
+            <div className="flex gap-2">
+              <button onClick={closeLogout}
+                className="flex-1 py-2.5 rounded-[8px] text-xs font-semibold transition-all hover:opacity-70"
+                style={{ background: 'rgba(252,255,252,0.07)', color: 'rgba(252,255,252,0.6)' }}>
+                Cancel
+              </button>
+              <button onClick={logout}
+                className="flex-1 py-2.5 rounded-[8px] text-xs font-bold transition-all hover:opacity-85"
+                style={{ background: '#D94840', color: '#FCFFFC' }}>
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
