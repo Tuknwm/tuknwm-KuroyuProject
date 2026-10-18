@@ -153,11 +153,11 @@ export default function Header() {
     
     <div aria-hidden="true" style={{
       position: 'fixed', top: 0, left: 0, right: 0, height: 64, zIndex: 49,
-      background: scrolled ? 'rgba(38,38,38,0.85)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(16px) saturate(180%)' : 'none',
-      WebkitBackdropFilter: scrolled ? 'blur(16px) saturate(180%)' : 'none',
-      borderBottom: scrolled ? '1px solid rgba(252,255,252,0.07)' : 'none',
-      boxShadow: scrolled ? '0 4px 24px rgba(0,0,0,0.35)' : 'none',
+      background: scrolled && !isHome ? 'rgba(38,38,38,0.85)' : 'transparent',
+      backdropFilter: scrolled && !isHome ? 'blur(16px) saturate(180%)' : 'none',
+      WebkitBackdropFilter: scrolled && !isHome ? 'blur(16px) saturate(180%)' : 'none',
+      borderBottom: scrolled && !isHome ? '1px solid rgba(252,255,252,0.07)' : 'none',
+      boxShadow: scrolled && !isHome ? '0 4px 24px rgba(0,0,0,0.35)' : 'none',
       transition: 'background 0.5s ease, box-shadow 0.3s ease',
       pointerEvents: 'none',
     }} />

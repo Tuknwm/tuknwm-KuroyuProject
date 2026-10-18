@@ -173,7 +173,7 @@ export default function LoadingPage({ onReady, onDone }) {
                 fill: 'transparent',
                 stroke: 'rgba(255,255,255,0.22)',
                 strokeWidth: 1,
-                fontSize: 148,
+                fontSize: 168,
                 fontFamily: '"DM Sans", sans-serif',
                 fontWeight: 800,
                 letterSpacing: 10,
