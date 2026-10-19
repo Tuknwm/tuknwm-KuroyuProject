@@ -891,7 +891,7 @@ function AddProductPanel() {
           <p className="text-[10px] mb-2 font-medium" style={{ color: 'rgba(252,255,252,0.3)' }}>Detail page</p>
           
           <div style={{ width: '100%', aspectRatio: '4/5', position: 'relative', borderRadius: 10, overflow: 'hidden', border: '1px solid rgba(252,255,252,0.07)' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, width: 800, transformOrigin: 'top left', transform: `scale(${1})`, background: '#262626' }}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: 800, transformOrigin: 'top left', transform: `scale(${1})`, background: '#080808' }}
               ref={el => { if (el) { const w = el.parentElement.offsetWidth; el.style.transform = `scale(${w/800})`; el.parentElement.style.height = `${el.scrollHeight * w/800}px`; } }}>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, padding: '24px 32px' }}>
@@ -3008,7 +3008,7 @@ export default function SettingsPage() {
   const Panel = PANELS[activeTab];
 
   return (
-    <div style={{ background: '#262626', color: '#FCFFFC', minHeight: '100vh', overflowX: 'hidden' }}>
+    <div style={{ background: '#080808', color: '#FCFFFC', minHeight: '100vh', overflowX: 'hidden' }}>
       <div className="fixed inset-0 pointer-events-none select-none flex items-center justify-center z-0" aria-hidden="true">
         <img src="/CatLogoWhite.png" alt="" style={{ width: '15vw', maxWidth: 600, opacity: 0.01, userSelect: 'none', filter: 'grayscale(1)' }} />
       </div>

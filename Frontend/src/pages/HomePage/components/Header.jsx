@@ -153,7 +153,7 @@ export default function Header() {
     
     <div aria-hidden="true" style={{
       position: 'fixed', top: 0, left: 0, right: 0, height: 64, zIndex: 49,
-      background: scrolled && !isHome ? 'rgba(38,38,38,0.85)' : 'transparent',
+      background: scrolled && !isHome ? 'rgba(8,8,8,0.85)' : 'transparent',
       backdropFilter: scrolled && !isHome ? 'blur(16px) saturate(180%)' : 'none',
       WebkitBackdropFilter: scrolled && !isHome ? 'blur(16px) saturate(180%)' : 'none',
       borderBottom: scrolled && !isHome ? '1px solid rgba(252,255,252,0.07)' : 'none',
@@ -256,7 +256,7 @@ export default function Header() {
                 <Bell className="w-5 h-5" />
                 {unreadCount > 0 && (
                   <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#D94840]"
-                    style={{ boxShadow: '0 0 0 2px #262626' }} />
+                    style={{ boxShadow: '0 0 0 2px #080808' }} />
                 )}
               </button>
               <Tooltip>Notifications</Tooltip>
@@ -264,7 +264,7 @@ export default function Header() {
 
             {notifOpen && (
               <div className="absolute right-0 mt-2 w-80 rounded-[12px] overflow-hidden"
-                style={{ background: 'rgba(38,38,38,0.6)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 100 }}>
+                style={{ background: 'rgba(8,8,8,0.85)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 100 }}>
                 <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid rgba(252,255,252,0.06)' }}>
                   <span className="text-xs font-bold" style={{ color: '#FCFFFC' }}>Notifications</span>
                   {notifications.length > 0 && (
@@ -322,7 +322,7 @@ export default function Header() {
               <ShoppingCart className="w-5 h-5" />
               {totalCount > 0 && (
                 <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#D94840]"
-                  style={{ boxShadow: '0 0 0 2px #262626' }} />
+                  style={{ boxShadow: '0 0 0 2px #080808' }} />
               )}
             </button>
             <Tooltip>My Cart</Tooltip>
@@ -341,7 +341,7 @@ export default function Header() {
 
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-52 rounded-[10px] overflow-hidden py-1"
-                  style={{ background: 'rgba(38,38,38,0.6)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 100 }}>
+                  style={{ background: 'rgba(8,8,8,0.85)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', border: '1px solid rgba(252,255,252,0.08)', boxShadow: '0 16px 40px rgba(0,0,0,0.5)', zIndex: 100 }}>
                   <div className="px-4 py-3" style={{ borderBottom: '1px solid rgba(252,255,252,0.06)' }}>
                     <div className="text-xs font-semibold" style={{ color: '#FCFFFC' }}>{user.name}</div>
                     <div className="text-[11px] mt-0.5 truncate" style={{ color: 'rgba(252,255,252,0.4)' }}>{user.email}</div>

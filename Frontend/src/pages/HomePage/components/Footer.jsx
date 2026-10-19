@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <footer className="w-full pt-12 pb-8 mt-12" style={{ background: '#262626', borderTop: '1px solid rgba(252,255,252,0.07)', color: 'rgba(252,255,252,0.45)' }}>
+    <footer className="w-full pt-12 pb-8 mt-12" style={{ background: '#080808', borderTop: '1px solid rgba(252,255,252,0.07)', color: 'rgba(252,255,252,0.45)' }}>
       <div className="max-w-[1280px] mx-auto px-4 lg:px-8">
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">

@@ -7,7 +7,7 @@ export default function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-[100dvh] flex flex-col" style={{ background: '#262626' }}>
+    <div className="min-h-[100dvh] flex flex-col" style={{ background: '#080808' }}>
       <Header />
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 text-center select-none">

@@ -45,7 +45,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: '#262626' }}>
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: '#080808' }}>
       <div className="w-full max-w-md rounded-[12px] overflow-hidden" style={{ background: '#2E2E2E', border: '1px solid rgba(252,255,252,0.08)' }}>
         <div className="flex flex-col items-center py-8 px-6" style={{ background: '#1E1E1E', borderBottom: '1px solid rgba(252,255,252,0.07)' }}>
           <img src="/CatLogoWhite.png" alt="Kuroyu" className="h-10 w-auto object-contain mb-3" />

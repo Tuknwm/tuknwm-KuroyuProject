@@ -214,7 +214,7 @@ export default function BrandStory() {
       <div aria-hidden="true" style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
         height: '20rem',
-        background: 'linear-gradient(to top, #262626 0%, transparent 100%)',
+        background: 'linear-gradient(to top, #080808 0%, transparent 100%)',
         backdropFilter: 'blur(32px)',
         WebkitBackdropFilter: 'blur(32px)',
         maskImage: 'linear-gradient(to top, black 40%, transparent 100%)',

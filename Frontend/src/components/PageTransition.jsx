@@ -21,7 +21,7 @@ export default function PageTransition({ children }) {
       
       <div ref={overlayRef} style={{
         position: 'fixed', inset: 0,
-        background: '#262626',
+        background: '#080808',
         zIndex: 9999,
         pointerEvents: 'none',
       }} />

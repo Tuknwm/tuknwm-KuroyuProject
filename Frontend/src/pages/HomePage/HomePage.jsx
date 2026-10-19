@@ -9,8 +9,8 @@ import ScrollIndicator from './components/ScrollIndicator';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen font-body flex flex-col selection:bg-white selection:text-[#262626]"
-      style={{ background: '#262626', color: '#FCFFFC' }}>
+    <div className="min-h-screen font-body flex flex-col selection:bg-white selection:text-[#080808]"
+      style={{ background: '#080808', color: '#FCFFFC' }}>
 
       
       <div className="fixed inset-0 pointer-events-none select-none flex items-center justify-center z-0"
@@ -24,7 +24,7 @@ export default function HomePage() {
         <main className="flex-1 w-full flex flex-col">
           <div id="section-hero"><HeroBanner /></div>
           <div id="section-featured"><FeaturedCards /></div>
-          <div id="section-brand" style={{ background: 'linear-gradient(to bottom, #000 70%, #262626 100%)' }}><BrandStory /></div>
+          <div id="section-brand" style={{ background: 'linear-gradient(to bottom, #000 70%, #080808 100%)' }}><BrandStory /></div>
           <div id="section-products"><ProductFeed /></div>
         </main>
         <ScrollIndicator />

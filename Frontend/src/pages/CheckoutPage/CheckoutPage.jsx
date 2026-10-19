@@ -139,7 +139,7 @@ export default function CheckoutPage() {
   if (placed) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-8 font-body"
-        style={{ background: '#262626', color: '#FCFFFC', overflow: 'hidden' }}>
+        style={{ background: '#080808', color: '#FCFFFC', overflow: 'hidden' }}>
 
         <style>{`@keyframes kFadeUp{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:translateY(0)}}`}</style>
 
@@ -171,7 +171,7 @@ export default function CheckoutPage() {
   if (!placed && items.length === 0) { navigate('/cart'); return null; }
 
   return (
-    <div className="min-h-screen font-body flex flex-col" style={{ background: '#262626', color: '#FCFFFC' }}>
+    <div className="min-h-screen font-body flex flex-col" style={{ background: '#080808', color: '#FCFFFC' }}>
       <div className="fixed inset-0 pointer-events-none select-none flex items-center justify-center z-0" aria-hidden="true">
         <img src="/CatLogoWhite.png" alt="" style={{ width: '15vw', maxWidth: 600, opacity: 0.01, userSelect: 'none', filter: 'grayscale(1)' }} />
       </div>

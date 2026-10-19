@@ -202,7 +202,7 @@ export default function ProductDetailPage() {
   function goIndex(i) { goTo(i, i > activeImg ? 'left' : 'right'); }
 
   return (
-    <div className="min-h-screen font-body flex flex-col" style={{ background: '#262626', color: '#FCFFFC' }}>
+    <div className="min-h-screen font-body flex flex-col" style={{ background: '#080808', color: '#FCFFFC' }}>
       <div className="fixed inset-0 pointer-events-none select-none flex items-center justify-center z-0" aria-hidden="true">
         <img src="/CatLogoWhite.png" alt="" style={{ width: '15vw', maxWidth: 600, opacity: 0.01, userSelect: 'none', filter: 'grayscale(1)' }} />
       </div>

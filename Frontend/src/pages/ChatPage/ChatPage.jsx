@@ -96,7 +96,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-body" style={{ background: '#262626', color: '#FCFFFC' }}>
+    <div className="min-h-screen flex flex-col font-body" style={{ background: '#080808', color: '#FCFFFC' }}>
       <Header />
 
       <main className="flex-1">
