@@ -16,7 +16,7 @@ export default function HomePage() {
       <div className="fixed inset-0 pointer-events-none select-none flex items-center justify-center z-0"
         aria-hidden="true">
         <img src="/CatLogoWhite.png" alt=""
-          style={{ width: '15vw', maxWidth: 600, opacity: 0.01, userSelect: 'none', filter: 'grayscale(1)' }} />
+          style={{ width: '15vw', maxWidth: 600, opacity: 0.04, userSelect: 'none', filter: 'grayscale(1)' }} />
       </div>
 
       <div className="relative z-10 flex flex-col flex-1">
